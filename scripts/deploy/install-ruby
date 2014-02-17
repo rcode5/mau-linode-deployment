@@ -1,16 +1,14 @@
 echo "Setting up rbenv and ruby $RUBY_VERSION for $DEPLOY_USER"
 
 export HOME=/home/$DEPLOY_USER
-export PROFILE=$HOME/.bash_profile
+export PROFILE=$HOME/.bashrc
 export RBENV_DIR=$HOME/.rbenv
 echo "Deploying to $HOME as $DEPLOY_USER"
 
 git clone git://github.com/sstephenson/rbenv.git $RBENV_DIR
-echo 'export PATH=\"\$HOME/.rbenv/bin:\$PATH\"' >> $PROFILE
-echo 'eval \"\$(rbenv init -)\"' >> $PROFILE
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $PROFILE
+echo 'eval "$(rbenv init -)"' >> $PROFILE
 git clone git://github.com/sstephenson/ruby-build.git $RBENV_DIR/plugins/ruby-build
-
-source $PROFILE
 
 rbenv install $RUBY_VERSION && rbenv rehash && rbenv global RUBY_VERSION
 echo 'gem: --no-document' > $HOME/.gemrc && gem install bundler
