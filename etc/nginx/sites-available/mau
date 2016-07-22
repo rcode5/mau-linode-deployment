@@ -4,9 +4,26 @@ upstream unicorn {
 
 server {
   listen 80 default_server deferred;
-  server_name mau-acceptance.missionartistsunited.com;
+  server_name mau.rcode5.com
   root /home/deploy/deployed/mau/current/public;
 
+  location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+  }
+
+  # location / {
+  #   if (-f $document_root/maintenance.html) {
+  #     return 503;
+  #   }
+  # }
+
+  # error_page 503 @maintenance;
+  # location @maintenance {
+  #   if ($uri !~ ^/images/) {
+  #     rewrite ^(.*)$ /maintenance.html break;
+  #   }
+  # }
+  
   location ^~ /assets/ {
     gzip_static on;
     expires max;
